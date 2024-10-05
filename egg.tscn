@@ -4,23 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://creature.tscn" id="2_x32em"]
 [ext_resource type="Texture2D" uid="uid://dsgrti54luam0" path="res://sprites/egg.png" id="3_hfap3"]
 
-[sub_resource type="Animation" id="Animation_12yia"]
-resource_name = "hatching"
-length = 1.2
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [-0.174533, 0.174533]
-}
-
 [sub_resource type="Animation" id="Animation_ng3qu"]
 length = 0.001
 tracks/0/type = "value"
@@ -42,6 +25,18 @@ tracks/1/path = NodePath(".:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../../small:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -89,6 +84,35 @@ tracks/2/keys = {
 "method": &"queue_free"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../../small:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_12yia"]
+resource_name = "hatching"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [-0.174533, 0.174533]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lim2u"]
 _data = {
@@ -104,16 +128,25 @@ creatures = Array[PackedScene]([ExtResource("2_x32em")])
 [node name="rotation" type="Node2D" parent="."]
 
 [node name="sprite" type="Sprite2D" parent="rotation"]
+visibility_layer = 4
 position = Vector2(0, -16)
 texture = ExtResource("3_hfap3")
 hframes = 2
 
-[node name="animation" type="AnimationPlayer" parent="rotation/sprite"]
+[node name="small" type="Sprite2D" parent="."]
+visibility_layer = 2
+position = Vector2(0, -9)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("3_hfap3")
+hframes = 2
+
+[node name="timer" type="Timer" parent="."]
+
+[node name="animation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../rotation/sprite")
 libraries = {
 "": SubResource("AnimationLibrary_lim2u")
 }
 autoplay = "hatching"
-
-[node name="timer" type="Timer" parent="."]
 
 [connection signal="timeout" from="timer" to="." method="hatch"]

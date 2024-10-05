@@ -23,4 +23,4 @@ func hatch():
     if hatchOnReady:
         queue_free()
     else:
-        $rotation/sprite/animation.play('hatched')
+        $animation.play('hatched')
