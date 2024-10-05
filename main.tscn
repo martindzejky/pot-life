@@ -1,14 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ddac04r8c7pf4"]
+[gd_scene load_steps=4 format=3 uid="uid://ddac04r8c7pf4"]
 
-[ext_resource type="Script" path="res://magnifying-glass.gd" id="1_crudy"]
 [ext_resource type="Script" path="res://scripts/root-viewport-culling-mask.gd" id="1_evdgx"]
 [ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://creature.tscn" id="1_mav1w"]
-[ext_resource type="Script" path="res://scripts/viewport-shared-world.gd" id="2_53543"]
-[ext_resource type="Texture2D" uid="uid://dpk73y08v1xqr" path="res://sprites/magnifying-glass.png" id="2_muwda"]
-[ext_resource type="Texture2D" uid="uid://btmnophlty74y" path="res://sprites/magnifying-glass-mask.png" id="3_va31l"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_5g2x6"]
-viewport_path = NodePath("magnifying-glass/magnify-viewport")
+[ext_resource type="PackedScene" uid="uid://dhhxtcf6sovpj" path="res://magnifying-glass.tscn" id="2_1r56x"]
 
 [node name="main" type="Node"]
 
@@ -16,33 +10,8 @@ viewport_path = NodePath("magnifying-glass/magnify-viewport")
 script = ExtResource("1_evdgx")
 
 [node name="camera" type="Camera2D" parent="."]
+zoom = Vector2(0.25, 0.25)
 
 [node name="creature" parent="." instance=ExtResource("1_mav1w")]
 
-[node name="magnifying-glass" type="Node2D" parent="."]
-script = ExtResource("1_crudy")
-
-[node name="remote-transform" type="RemoteTransform2D" parent="magnifying-glass"]
-remote_path = NodePath("../magnify-viewport/magnify-camera")
-
-[node name="magnify-viewport" type="SubViewport" parent="magnifying-glass"]
-disable_3d = true
-handle_input_locally = false
-canvas_item_default_texture_filter = 0
-gui_disable_input = true
-canvas_cull_mask = 4293918725
-size = Vector2i(200, 200)
-script = ExtResource("2_53543")
-
-[node name="magnify-camera" type="Camera2D" parent="magnifying-glass/magnify-viewport"]
-zoom = Vector2(3, 3)
-
-[node name="mask" type="Sprite2D" parent="magnifying-glass"]
-clip_children = 1
-texture = ExtResource("3_va31l")
-
-[node name="view" type="Sprite2D" parent="magnifying-glass/mask"]
-texture = SubResource("ViewportTexture_5g2x6")
-
-[node name="frame" type="Sprite2D" parent="magnifying-glass"]
-texture = ExtResource("2_muwda")
+[node name="magnifying-glass" parent="." instance=ExtResource("2_1r56x")]

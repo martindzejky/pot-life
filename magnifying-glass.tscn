@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://dhhxtcf6sovpj"]
+
+[ext_resource type="Script" path="res://magnifying-glass.gd" id="1_t2ymm"]
+[ext_resource type="Texture2D" uid="uid://dpk73y08v1xqr" path="res://sprites/magnifying-glass.png" id="2_k147v"]
+[ext_resource type="Script" path="res://scripts/viewport-shared-world.gd" id="2_q2rkc"]
+[ext_resource type="Texture2D" uid="uid://btmnophlty74y" path="res://sprites/magnifying-glass-mask.png" id="3_34oo4"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ub75n"]
+viewport_path = NodePath("magnify-viewport")
+
+[node name="magnifying-glass" type="Node2D"]
+script = ExtResource("1_t2ymm")
+
+[node name="remote-transform" type="RemoteTransform2D" parent="."]
+remote_path = NodePath("../magnify-viewport/magnify-camera")
+
+[node name="magnify-viewport" type="SubViewport" parent="."]
+disable_3d = true
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+gui_disable_input = true
+canvas_cull_mask = 4293918725
+size = Vector2i(800, 800)
+script = ExtResource("2_q2rkc")
+
+[node name="magnify-camera" type="Camera2D" parent="magnify-viewport"]
+zoom = Vector2(4, 4)
+
+[node name="mask" type="Sprite2D" parent="."]
+clip_children = 1
+visibility_layer = 2
+scale = Vector2(4, 4)
+texture = ExtResource("3_34oo4")
+
+[node name="view" type="Sprite2D" parent="mask"]
+visibility_layer = 2
+scale = Vector2(0.25, 0.25)
+texture = SubResource("ViewportTexture_ub75n")
+
+[node name="frame" type="Sprite2D" parent="."]
+visibility_layer = 2
+scale = Vector2(4, 4)
+texture = ExtResource("2_k147v")
