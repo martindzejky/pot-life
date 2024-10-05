@@ -1,0 +1,119 @@
+[gd_scene load_steps=8 format=3 uid="uid://dwvp01keji613"]
+
+[ext_resource type="Script" path="res://egg.gd" id="1_b3l4u"]
+[ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://creature.tscn" id="2_x32em"]
+[ext_resource type="Texture2D" uid="uid://dsgrti54luam0" path="res://sprites/egg.png" id="3_hfap3"]
+
+[sub_resource type="Animation" id="Animation_12yia"]
+resource_name = "hatching"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [-0.174533, 0.174533]
+}
+
+[sub_resource type="Animation" id="Animation_ng3qu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_e8xwm"]
+resource_name = "hatched"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lim2u"]
+_data = {
+"RESET": SubResource("Animation_ng3qu"),
+"hatched": SubResource("Animation_e8xwm"),
+"hatching": SubResource("Animation_12yia")
+}
+
+[node name="egg" type="Node2D"]
+script = ExtResource("1_b3l4u")
+creatures = Array[PackedScene]([ExtResource("2_x32em")])
+
+[node name="rotation" type="Node2D" parent="."]
+
+[node name="sprite" type="Sprite2D" parent="rotation"]
+position = Vector2(0, -16)
+texture = ExtResource("3_hfap3")
+hframes = 2
+
+[node name="animation" type="AnimationPlayer" parent="rotation/sprite"]
+libraries = {
+"": SubResource("AnimationLibrary_lim2u")
+}
+autoplay = "hatching"
+
+[node name="timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="timer" to="." method="hatch"]

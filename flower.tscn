@@ -3,7 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://dmbnsojw6n3rr" path="res://grass.tscn" id="1_xwdbh"]
 [ext_resource type="Texture2D" uid="uid://cpjvt8ukpmiur" path="res://sprites/flower.png" id="2_d86q4"]
 
-[node name="grass" instance=ExtResource("1_xwdbh")]
+[node name="flower" instance=ExtResource("1_xwdbh")]
+minScale = 1.5
+maxScale = 4.0
 
 [node name="sprite" parent="." index="0"]
 position = Vector2(0, -64)
