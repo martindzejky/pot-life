@@ -17,6 +17,7 @@ func _ready():
     for i in range(randi_range(8, 12)):
         var object := egg.instantiate() as Egg
         object.hatchOnReady = randf() < 0.8
+        object.bounds = bounds
         spawnInBounds(object)
 
 

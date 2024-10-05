@@ -2,6 +2,7 @@ extends Node2D
 class_name Egg
 
 @export var hatchOnReady := false
+@export var bounds: CollisionShape2D
 @export var creatures: Array[PackedScene] = []
 
 
@@ -11,6 +12,7 @@ func _ready():
         hatch()
     else:
         $timer.start(randf_range(4, 10))
+        $animation.advance(randf())
 
 
 func hatch():
@@ -19,6 +21,7 @@ func hatch():
     var creature := creatures.pick_random().instantiate() as Node2D
     get_parent().add_child(creature)
     creature.global_position = global_position + Vector2(0, 0.1)
+    creature.bounds = bounds
 
     if hatchOnReady:
         queue_free()
