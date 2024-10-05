@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bfcpwstcd18tx"]
+[gd_scene load_steps=8 format=3 uid="uid://bfcpwstcd18tx"]
 
 [ext_resource type="Texture2D" uid="uid://cyhyfexvya2bb" path="res://sprites/pot.png" id="1_hbj56"]
 [ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://creature.tscn" id="1_qpb4c"]
 [ext_resource type="PackedScene" uid="uid://dmbnsojw6n3rr" path="res://grass.tscn" id="2_b78c6"]
 [ext_resource type="Script" path="res://spawner.gd" id="2_di1ca"]
+[ext_resource type="PackedScene" uid="uid://cr55idqo8g4sy" path="res://flower.tscn" id="4_51yba"]
+[ext_resource type="PackedScene" uid="uid://bppbkd6xkeb0q" path="res://rock.tscn" id="5_2lk54"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40xfu"]
 size = Vector2(1336, 862)
@@ -25,5 +27,5 @@ shape = SubResource("RectangleShape2D_40xfu")
 [node name="spawner" type="Node" parent="inside" node_paths=PackedStringArray("bounds")]
 script = ExtResource("2_di1ca")
 bounds = NodePath("../bounds")
-grassObjects = Array[PackedScene]([ExtResource("2_b78c6")])
+grassObjects = Array[PackedScene]([ExtResource("2_b78c6"), ExtResource("4_51yba"), ExtResource("5_2lk54")])
 creatureObjects = Array[PackedScene]([ExtResource("1_qpb4c")])
