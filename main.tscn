@@ -1,17 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://ddac04r8c7pf4"]
 
 [ext_resource type="Script" path="res://scripts/root-viewport-culling-mask.gd" id="1_evdgx"]
-[ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://creature.tscn" id="1_mav1w"]
 [ext_resource type="PackedScene" uid="uid://dhhxtcf6sovpj" path="res://magnifying-glass.tscn" id="2_1r56x"]
+[ext_resource type="PackedScene" uid="uid://bfcpwstcd18tx" path="res://pot.tscn" id="3_rjdef"]
 
 [node name="main" type="Node"]
 
 [node name="root-viewport-culling-mask" type="Node" parent="."]
 script = ExtResource("1_evdgx")
 
+[node name="tools" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="magnifying-glass" parent="tools" instance=ExtResource("2_1r56x")]
+
 [node name="camera" type="Camera2D" parent="."]
 zoom = Vector2(0.25, 0.25)
 
-[node name="creature" parent="." instance=ExtResource("1_mav1w")]
-
-[node name="magnifying-glass" parent="." instance=ExtResource("2_1r56x")]
+[node name="pot" parent="." instance=ExtResource("3_rjdef")]

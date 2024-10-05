@@ -12,7 +12,8 @@ viewport_path = NodePath("magnify-viewport")
 script = ExtResource("1_t2ymm")
 
 [node name="remote-transform" type="RemoteTransform2D" parent="."]
-remote_path = NodePath("../magnify-viewport/magnify-camera")
+position = Vector2(-206, -220)
+remote_path = NodePath("../magnify-viewport/camera")
 
 [node name="magnify-viewport" type="SubViewport" parent="."]
 disable_3d = true
@@ -20,24 +21,28 @@ handle_input_locally = false
 canvas_item_default_texture_filter = 0
 gui_disable_input = true
 canvas_cull_mask = 4293918725
-size = Vector2i(800, 800)
+size = Vector2i(500, 500)
 script = ExtResource("2_q2rkc")
 
-[node name="magnify-camera" type="Camera2D" parent="magnify-viewport"]
+[node name="camera" type="Camera2D" parent="magnify-viewport"]
+position = Vector2(-206, -220)
 zoom = Vector2(4, 4)
 
 [node name="mask" type="Sprite2D" parent="."]
 clip_children = 1
 visibility_layer = 2
+position = Vector2(-167, -187)
 scale = Vector2(4, 4)
 texture = ExtResource("3_34oo4")
 
 [node name="view" type="Sprite2D" parent="mask"]
 visibility_layer = 2
+position = Vector2(-10, -10)
 scale = Vector2(0.25, 0.25)
 texture = SubResource("ViewportTexture_ub75n")
 
 [node name="frame" type="Sprite2D" parent="."]
 visibility_layer = 2
+position = Vector2(-167, -187)
 scale = Vector2(4, 4)
 texture = ExtResource("2_k147v")

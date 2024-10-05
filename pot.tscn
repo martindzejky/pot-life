@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfcpwstcd18tx"]
+
+[ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://creature.tscn" id="1_qpb4c"]
+[ext_resource type="PackedScene" uid="uid://dmbnsojw6n3rr" path="res://grass.tscn" id="2_b78c6"]
+
+[node name="pot" type="Node2D"]
+y_sort_enabled = true
+
+[node name="creature" parent="." instance=ExtResource("1_qpb4c")]
+
+[node name="creature2" parent="." instance=ExtResource("1_qpb4c")]
+position = Vector2(-55, 46)
+
+[node name="creature3" parent="." instance=ExtResource("1_qpb4c")]
+position = Vector2(-70, -45)
+
+[node name="grass" parent="." instance=ExtResource("2_b78c6")]
+position = Vector2(13, 14)
+
+[node name="grass2" parent="." instance=ExtResource("2_b78c6")]
+position = Vector2(-12, -9)
+
+[node name="grass3" parent="." instance=ExtResource("2_b78c6")]
+position = Vector2(-42, 31)
