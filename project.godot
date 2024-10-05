@@ -25,6 +25,12 @@ window/size/resizable=false
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[layer_names]
+
+2d_render/layer_1="Default"
+2d_render/layer_2="Small Only"
+2d_render/layer_3="Big Only"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

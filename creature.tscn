@@ -43,11 +43,12 @@ _data = {
 [node name="creature" type="Node2D"]
 
 [node name="small" type="Sprite2D" parent="."]
+visibility_layer = 2
 position = Vector2(0, -4)
 texture = ExtResource("1_uoo81")
 
 [node name="big" type="Sprite2D" parent="."]
-visible = false
+visibility_layer = 4
 position = Vector2(0, -16)
 texture = ExtResource("2_blnmw")
 hframes = 2
