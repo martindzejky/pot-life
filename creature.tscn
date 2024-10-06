@@ -1,10 +1,81 @@
-[gd_scene load_steps=10 format=3 uid="uid://3eeoattdm7pk"]
+[gd_scene load_steps=14 format=3 uid="uid://3eeoattdm7pk"]
 
 [ext_resource type="Script" path="res://creature.gd" id="1_17ate"]
 [ext_resource type="Texture2D" uid="uid://xqmief0fxbnc" path="res://sprites/creature-small.png" id="1_uoo81"]
 [ext_resource type="Texture2D" uid="uid://cgwpiw2dm4wra" path="res://sprites/creature-big.png" id="2_blnmw"]
-[ext_resource type="Script" path="res://face.gd" id="4_44v5p"]
 [ext_resource type="Texture2D" uid="uid://cpxalxqkgxyky" path="res://sprites/face.png" id="4_oxd6a"]
+
+[sub_resource type="Animation" id="Animation_n2br8"]
+resource_name = "happy"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_nudsn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_m1tgo"]
+resource_name = "sad"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_64w17"]
+resource_name = "struggling"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_groeh"]
+_data = {
+"RESET": SubResource("Animation_nudsn"),
+"happy": SubResource("Animation_n2br8"),
+"sad": SubResource("Animation_m1tgo"),
+"struggling": SubResource("Animation_64w17")
+}
 
 [sub_resource type="Animation" id="Animation_r1knh"]
 length = 0.001
@@ -114,12 +185,17 @@ hframes = 5
 
 [node name="face" type="Node2D" parent="big"]
 position = Vector2(10, -10)
-script = ExtResource("4_44v5p")
 
 [node name="sprite" type="Sprite2D" parent="big/face"]
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("4_oxd6a")
-hframes = 3
+hframes = 4
+
+[node name="animation" type="AnimationPlayer" parent="big/face/sprite"]
+libraries = {
+"": SubResource("AnimationLibrary_groeh")
+}
+autoplay = "happy"
 
 [node name="animation" type="AnimationPlayer" parent="."]
 root_node = NodePath("../big")
