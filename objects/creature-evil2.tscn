@@ -4,6 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://c6uf4j63b800s" path="res://sprites/creature-big-evil2.png" id="2_jkyep"]
 
 [node name="creature" instance=ExtResource("1_lec6g")]
+wanderSpeed = 12.0
+huntingSpeed = 20.0
 
 [node name="big" parent="." index="1"]
 texture = ExtResource("2_jkyep")

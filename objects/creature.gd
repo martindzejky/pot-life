@@ -5,6 +5,7 @@ class_name Creature
 @export var skull: PackedScene
 @export var wanderSpeed := 14.0
 @export var wanderRange := 40.0
+@export var huntingSpeed := 18.0
 @export var evil := false
 
 
@@ -13,9 +14,12 @@ class_name Creature
 
 var state := ''
 var wanderTarget := global_position
+var huntingTarget: Node2D = null
+var beingEatenBy: Node2D = null
 
 
 func _ready():
+    $hunger.value = randf_range(60, 200)
     switchState('idle')
 
 func _process(delta):
@@ -26,12 +30,13 @@ func switchState(newState: String):
     if newState == state: return
 
     if has_method(state + 'End'):
-        call(state + 'End')
+        call(state + 'End', newState)
 
+    var previousState := state
     state = newState
 
     if has_method(state + 'Start'):
-        call(state + 'Start')
+        call(state + 'Start', previousState)
 
 func die():
     queue_free()
@@ -43,11 +48,15 @@ func die():
 
 # idle
 
-func idleStart():
+func idleStart(_prev):
 
     if $hunger.value > 100 and randf() < 0.04:
         switchState('birthing')
         $hunger.value -= 30
+        return
+
+    if evil and $hunger.value < 100 and randf() < 0.6:
+        switchState('hunting')
         return
 
     $animation.play('idle')
@@ -55,8 +64,6 @@ func idleStart():
 
     if $hunger.value < 20:
         $"big/face-offset/face/sprite/animation".play('sad')
-    elif evil:
-        $"big/face-offset/face/sprite/animation".play('evil')
     else:
         $"big/face-offset/face/sprite/animation".play('happy')
 
@@ -66,13 +73,13 @@ func idleProcess(_delta):
 func idleTimeout():
     switchState('wandering')
 
-func idleEnd():
+func idleEnd(_next):
     $"idle-timer".stop()
 
 
 # wandering
 
-func wanderingStart():
+func wanderingStart(_prev):
     $animation.play('walk')
 
     wanderTarget = global_position + Vector2(
@@ -110,7 +117,7 @@ func wanderingProcess(delta):
 
 # birthing
 
-func birthingStart():
+func birthingStart(_prev):
 
     $animation.play('idle')
     $"big/face-offset/face/sprite/animation".play('struggling')
@@ -123,5 +130,87 @@ func birthingTimeout():
     get_tree().get_first_node_in_group('spawner').spawnEggFromCreature(self)
     switchState('idle')
 
-func birthingEnd():
+func birthingEnd(_next):
     $"birthing-timer".stop()
+
+
+# hunting
+
+func huntingStart(_prev):
+
+    var targets := get_tree().get_nodes_in_group('creature').filter(func(creature): return not creature.evil)
+    if targets.size() <= 0:
+        switchState('idle')
+        return
+
+    var closestTarget := targets[0] as Node2D
+    var closestDistance := closestTarget.global_position.distance_squared_to(global_position)
+
+    for t in targets:
+        var distance = t.global_position.distance_squared_to(global_position)
+        if distance < closestDistance:
+            closestDistance = distance
+            closestTarget = t
+
+    huntingTarget = closestTarget
+
+    $animation.play('walk')
+    $"big/face-offset/face/sprite/animation".play('evil')
+
+func huntingProcess(delta):
+
+    if huntingTarget == null:
+        switchState('idle')
+        return
+
+    var movement = global_position.direction_to(huntingTarget.global_position) * huntingSpeed * delta
+    var distance = global_position.distance_squared_to(huntingTarget.global_position)
+
+    if distance > 80.0:
+        global_position += movement
+    else:
+        switchState('eating')
+        if huntingTarget is Creature:
+            huntingTarget.beingEatenBy = self
+            huntingTarget.switchState('beingEaten')
+
+    if abs(movement.x) > 0.0001:
+        $big.scale.x = sign(movement.x)
+
+func huntingEnd(next):
+    if next == 'eating': return
+
+    if huntingTarget != null:
+        if huntingTarget is Creature:
+            huntingTarget.beingEatenBy = null
+        huntingTarget = null
+
+
+# eating
+
+func eatingStart(_prev):
+    $animation.play('idle')
+    $"big/face-offset/face/sprite/animation".play('eating-evil')
+
+func eatingProcess(delta):
+
+    if huntingTarget == null:
+        switchState('idle')
+        return
+
+    var otherHunger := huntingTarget.get_node_or_null('hunger') as Hunger
+
+    if otherHunger == null:
+        switchState('idle')
+        return
+
+    otherHunger.value -= delta * 4
+    $hunger.value += delta * 4
+
+func beingEatenStart(_prev):
+    $animation.play('idle')
+    $"big/face-offset/face/sprite/animation".play('struggling')
+
+func beingEatenProcess(_delta):
+    if beingEatenBy == null:
+        switchState('idle')

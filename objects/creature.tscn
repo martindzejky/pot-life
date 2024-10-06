@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://3eeoattdm7pk"]
+[gd_scene load_steps=18 format=3 uid="uid://3eeoattdm7pk"]
 
 [ext_resource type="Script" path="res://objects/creature.gd" id="1_17ate"]
 [ext_resource type="Texture2D" uid="uid://xqmief0fxbnc" path="res://sprites/creature-small.png" id="1_uoo81"]
@@ -87,9 +87,27 @@ tracks/0/keys = {
 "values": [2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_p87ef"]
+resource_name = "eating-evil"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [5, 6]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_groeh"]
 _data = {
 "RESET": SubResource("Animation_nudsn"),
+"eating-evil": SubResource("Animation_p87ef"),
 "evil": SubResource("Animation_5kxxg"),
 "happy": SubResource("Animation_n2br8"),
 "sad": SubResource("Animation_m1tgo"),
@@ -211,7 +229,7 @@ position = Vector2(10, -10)
 [node name="sprite" type="Sprite2D" parent="big/face-offset/face"]
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("4_oxd6a")
-hframes = 5
+hframes = 7
 
 [node name="animation" type="AnimationPlayer" parent="big/face-offset/face/sprite"]
 libraries = {
@@ -234,7 +252,6 @@ one_shot = true
 
 [node name="hunger" type="Node" parent="."]
 script = ExtResource("5_h2seq")
-value = 30.0
 
 [connection signal="timeout" from="idle-timer" to="." method="idleTimeout"]
 [connection signal="timeout" from="birthing-timer" to="." method="birthingTimeout"]

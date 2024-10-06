@@ -6,6 +6,7 @@
 [node name="creature" instance=ExtResource("1_yf4pn")]
 wanderSpeed = 20.0
 wanderRange = 80.0
+huntingSpeed = 26.0
 evil = true
 
 [node name="big" parent="." index="1"]

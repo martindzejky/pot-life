@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://koi35i1jdc20"]
+[gd_scene load_steps=3 format=3 uid="uid://koi35i1jdc20"]
 
+[ext_resource type="Script" path="res://objects/skull.gd" id="1_17kwn"]
 [ext_resource type="Texture2D" uid="uid://b6k5mgupw3eom" path="res://sprites/skull.png" id="1_tr2pg"]
 
 [node name="skull" type="Node2D"]
+script = ExtResource("1_17kwn")
 
 [node name="big" type="Sprite2D" parent="."]
 visibility_layer = 4
