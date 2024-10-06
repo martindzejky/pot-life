@@ -39,6 +39,10 @@ func switchState(newState: String):
     if has_method(state + 'Start'):
         call(state + 'Start', previousState)
 
+func hurtByFire():
+    $hunger.value -= 15
+    switchState('hurt')
+
 func die():
 
     queue_free()
@@ -351,3 +355,20 @@ func healingEnd(_next):
             healingTarget.beingHealedBy = null
     healingTarget = null
     $"healing-timer".stop()
+
+
+# hurt
+
+func hurtStart(_prev):
+    $animation.play('being-eaten') # ehm... reused! end-of-compo stuff...
+    $"big/face-offset/face/sprite/animation".play('struggling')
+    $"hurt-timer".start(0.4)
+
+func hurtProcess(_delta):
+    pass
+
+func hurtTimeout():
+    switchState('idle')
+
+func hurtEnd(_next):
+    $"hurt-timer".stop()

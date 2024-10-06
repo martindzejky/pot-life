@@ -103,6 +103,37 @@ tracks/0/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_51i6m"]
+resource_name = "healing"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [7, 8]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("heal")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_m1tgo"]
 resource_name = "sad"
 loop_mode = 1
@@ -134,37 +165,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [2, 3]
-}
-
-[sub_resource type="Animation" id="Animation_51i6m"]
-resource_name = "healing"
-length = 1.6
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.8),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [7, 8]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("heal")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.8),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [0.0],
-"method": &"play"
-}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_groeh"]
@@ -430,6 +430,9 @@ one_shot = true
 [node name="healing-timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="hurt-timer" type="Timer" parent="."]
+one_shot = true
+
 [node name="hunger" type="Node" parent="."]
 script = ExtResource("5_h2seq")
 
@@ -457,5 +460,6 @@ max_distance = 50.0
 [connection signal="timeout" from="birthing-timer" to="." method="birthingTimeout"]
 [connection signal="timeout" from="eating-timer" to="." method="eatingTimeout"]
 [connection signal="timeout" from="healing-timer" to="." method="healingTimeout"]
+[connection signal="timeout" from="hurt-timer" to="." method="hurtTimeout"]
 [connection signal="reached_zero" from="hunger" to="." method="die"]
 [connection signal="finished" from="death" to="death" method="queue_free"]

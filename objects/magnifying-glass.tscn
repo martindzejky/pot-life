@@ -1,15 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhhxtcf6sovpj"]
+[gd_scene load_steps=10 format=3 uid="uid://dhhxtcf6sovpj"]
 
 [ext_resource type="Script" path="res://objects/magnifying-glass.gd" id="1_t2ymm"]
+[ext_resource type="PackedScene" uid="uid://wihssgv0qjwx" path="res://objects/fire.tscn" id="2_1sfl2"]
 [ext_resource type="Texture2D" uid="uid://dpk73y08v1xqr" path="res://sprites/magnifying-glass.png" id="2_k147v"]
 [ext_resource type="Script" path="res://scripts/viewport-shared-world.gd" id="2_q2rkc"]
 [ext_resource type="Texture2D" uid="uid://btmnophlty74y" path="res://sprites/magnifying-glass-mask.png" id="3_34oo4"]
+[ext_resource type="Texture2D" uid="uid://bsf4peo8sgdks" path="res://sprites/laser.png" id="5_760g6"]
+[ext_resource type="AudioStream" uid="uid://djvglf7bpibcs" path="res://sounds/shoot.wav" id="7_0khuu"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ub75n"]
 viewport_path = NodePath("magnify-viewport")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y5ieh"]
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("7_0khuu")
+
 [node name="magnifying-glass" type="Node2D"]
 script = ExtResource("1_t2ymm")
+fire = ExtResource("2_1sfl2")
 
 [node name="remote-transform" type="RemoteTransform2D" parent="."]
 position = Vector2(-206, -220)
@@ -49,3 +59,23 @@ visibility_layer = 2
 position = Vector2(-167, -187)
 scale = Vector2(4, 4)
 texture = ExtResource("2_k147v")
+
+[node name="laser" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-207, -219)
+scale = Vector2(8, 8)
+texture = ExtResource("5_760g6")
+
+[node name="shooting" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="cooling" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="shoot" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStreamRandomizer_y5ieh")
+volume_db = -4.0
+
+[connection signal="timeout" from="shooting" to="." method="shootingTimeout"]

@@ -16,7 +16,7 @@ size = Vector2(1336, 862)
 scale = Vector2(7, 7)
 texture = ExtResource("1_hbj56")
 
-[node name="inside" type="Node2D" parent="."]
+[node name="inside" type="Node2D" parent="." groups=["pot-inside"]]
 y_sort_enabled = true
 
 [node name="bounds" type="CollisionShape2D" parent="inside"]

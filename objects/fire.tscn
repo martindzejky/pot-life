@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://wihssgv0qjwx"]
+
+[ext_resource type="Script" path="res://objects/fire.gd" id="1_4gflr"]
+[ext_resource type="Texture2D" uid="uid://bsw6byo77q3mi" path="res://sprites/fire.png" id="1_u8qia"]
+[ext_resource type="AudioStream" uid="uid://cy5upfphnmnd5" path="res://sounds/hurt.wav" id="3_1fuxf"]
+
+[sub_resource type="Animation" id="Animation_2rl32"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_wbg1h"]
+resource_name = "burning"
+length = 0.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qp8ol"]
+_data = {
+"RESET": SubResource("Animation_2rl32"),
+"burning": SubResource("Animation_wbg1h")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_mbaev"]
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("3_1fuxf")
+
+[node name="fire" type="Node2D"]
+script = ExtResource("1_4gflr")
+
+[node name="sprite" type="Sprite2D" parent="."]
+visibility_layer = 4
+position = Vector2(0, -16)
+texture = ExtResource("1_u8qia")
+hframes = 5
+
+[node name="animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qp8ol")
+}
+autoplay = "burning"
+
+[node name="timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="hurt-timer" type="Timer" parent="."]
+wait_time = 0.6
+autostart = true
+
+[node name="hurt" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_mbaev")
+volume_db = -8.0
+max_distance = 50.0
+
+[connection signal="timeout" from="timer" to="." method="die"]
+[connection signal="timeout" from="hurt-timer" to="." method="hurt"]
