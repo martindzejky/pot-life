@@ -2,6 +2,7 @@ extends Node2D
 class_name Creature
 
 @export var bounds: CollisionShape2D
+@export var skull: PackedScene
 @export var wanderSpeed := 14.0
 @export var wanderRange := 40.0
 @export var evil := false
@@ -20,8 +21,8 @@ func _ready():
 func _process(delta):
     call(state + 'Process', delta)
 
-
 func switchState(newState: String):
+
     if newState == state: return
 
     if has_method(state + 'End'):
@@ -32,21 +33,29 @@ func switchState(newState: String):
     if has_method(state + 'Start'):
         call(state + 'Start')
 
+func die():
+    queue_free()
+    var object := skull.instantiate()
+    get_parent().add_child(object)
+    object.global_position = global_position
+
+
 
 # idle
 
 func idleStart():
 
-    # TODO: based on hunger and health
-    if randf() < 0.1:
+    if $hunger.value > 100 and randf() < 0.04:
         switchState('birthing')
+        $hunger.value -= 30
         return
 
     $animation.play('idle')
     $"idle-timer".start(randf_range(1, 4))
 
-    # TODO: based on hunger and health
-    if evil:
+    if $hunger.value < 20:
+        $"big/face-offset/face/sprite/animation".play('sad')
+    elif evil:
         $"big/face-offset/face/sprite/animation".play('evil')
     else:
         $"big/face-offset/face/sprite/animation".play('happy')

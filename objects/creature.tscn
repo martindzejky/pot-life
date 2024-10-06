@@ -1,9 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://3eeoattdm7pk"]
+[gd_scene load_steps=17 format=3 uid="uid://3eeoattdm7pk"]
 
 [ext_resource type="Script" path="res://objects/creature.gd" id="1_17ate"]
 [ext_resource type="Texture2D" uid="uid://xqmief0fxbnc" path="res://sprites/creature-small.png" id="1_uoo81"]
 [ext_resource type="Texture2D" uid="uid://cgwpiw2dm4wra" path="res://sprites/creature-big.png" id="2_blnmw"]
+[ext_resource type="PackedScene" uid="uid://koi35i1jdc20" path="res://objects/skull.tscn" id="2_hdvnx"]
 [ext_resource type="Texture2D" uid="uid://cpxalxqkgxyky" path="res://sprites/face.png" id="4_oxd6a"]
+[ext_resource type="Script" path="res://objects/hunger.gd" id="5_h2seq"]
 
 [sub_resource type="Animation" id="Animation_nudsn"]
 length = 0.001
@@ -18,6 +20,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_5kxxg"]
+resource_name = "evil"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
 }
 
 [sub_resource type="Animation" id="Animation_n2br8"]
@@ -67,22 +85,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [2, 3]
-}
-
-[sub_resource type="Animation" id="Animation_5kxxg"]
-resource_name = "evil"
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [4]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_groeh"]
@@ -188,6 +190,7 @@ _data = {
 
 [node name="creature" type="Node2D" groups=["creature"]]
 script = ExtResource("1_17ate")
+skull = ExtResource("2_hdvnx")
 
 [node name="small" type="Sprite2D" parent="."]
 visibility_layer = 2
@@ -229,5 +232,10 @@ one_shot = true
 [node name="birthing-timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="hunger" type="Node" parent="."]
+script = ExtResource("5_h2seq")
+value = 30.0
+
 [connection signal="timeout" from="idle-timer" to="." method="idleTimeout"]
 [connection signal="timeout" from="birthing-timer" to="." method="birthingTimeout"]
+[connection signal="reached_zero" from="hunger" to="." method="die"]
