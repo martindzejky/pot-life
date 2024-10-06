@@ -217,7 +217,7 @@ func eatingProcess(delta):
     $hunger.value += delta * 4
 
 func beingEatenStart(_prev):
-    $animation.play('idle')
+    $animation.play('being-eaten')
     $"big/face-offset/face/sprite/animation".play('struggling')
 
 func beingEatenProcess(_delta):
