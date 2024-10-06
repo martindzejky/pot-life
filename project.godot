@@ -15,7 +15,10 @@ config/description="My submission for Ludum Dare #56."
 config/version="1.0"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/image="res://sprites/splash.png"
+boot_splash/use_filter=false
+config/icon="res://sprites/icon.png"
+boot_splash/minimum_display_time=2000
 
 [display]
 
