@@ -20,7 +20,7 @@ func hatch():
     $timer.stop()
     var creature := creatures.pick_random().instantiate() as Node2D
     get_parent().add_child(creature)
-    creature.global_position = global_position + Vector2(0, 0.1)
+    creature.global_position = global_position
     creature.bounds = bounds
 
     if hatchOnReady:

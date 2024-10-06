@@ -35,7 +35,14 @@ func switchState(newState: String):
 # idle
 
 func idleStart():
+
+    # TODO: based on hunger and health
+    if randf() < 0.02:
+        switchState('birthing')
+        return
+
     $animation.play('idle')
+    $big/face.setFace(Face.State.HAPPY) # TODO: based on hunger and health
     $"idle-timer".start(randf_range(1, 4))
 
 func idleProcess(_delta):
@@ -84,3 +91,22 @@ func wanderingProcess(delta):
 
     if abs(movement.x) > 0.0001:
         $big.scale.x = sign(movement.x)
+
+
+# birthing
+
+func birthingStart():
+
+    $animation.play('idle')
+    $big/face.setFace(Face.State.STRAINING)
+    $"birthing-timer".start(randf_range(6, 12))
+
+func birthingProcess(_delta):
+    pass
+
+func birthingTimeout():
+    get_tree().get_first_node_in_group('spawner').spawnEggFromCreature(self)
+    switchState('idle')
+
+func birthingEnd():
+    $"birthing-timer".stop()
