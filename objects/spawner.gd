@@ -14,7 +14,7 @@ func _ready():
         spawnInBounds(object)
 
     # eggs
-    for i in range(randi_range(8, 12)):
+    for i in range(randi_range(14, 22)):
         var object := egg.instantiate() as Egg
         object.hatchOnReady = randf() < 0.8
         object.bounds = bounds
@@ -24,9 +24,9 @@ func _ready():
 
 func spawnEgg():
 
-    $timer.start(randf_range(4, 10))
+    $timer.start(randf_range(2, 4))
 
-    if get_tree().get_node_count_in_group('creature') < 20:
+    if get_tree().get_node_count_in_group('creature') < 40:
         if randf() < 0.6:
             var object := egg.instantiate() as Egg
             object.bounds = bounds
