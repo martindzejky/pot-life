@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dwvp01keji613" path="res://objects/egg.tscn" id="7_br2l4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40xfu"]
-size = Vector2(1336, 862)
+size = Vector2(1319, 796)
 
 [node name="pot" type="Node2D"]
 
@@ -20,7 +20,7 @@ texture = ExtResource("1_hbj56")
 y_sort_enabled = true
 
 [node name="bounds" type="CollisionShape2D" parent="inside"]
-position = Vector2(2, -95)
+position = Vector2(-6.5, -62)
 shape = SubResource("RectangleShape2D_40xfu")
 
 [node name="spawner" type="Node" parent="inside" node_paths=PackedStringArray("bounds") groups=["spawner"]]
