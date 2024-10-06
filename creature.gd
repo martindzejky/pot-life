@@ -42,7 +42,7 @@ func idleStart():
         return
 
     $animation.play('idle')
-    $big/face/sprite/animation.play('happy') # TODO: based on hunger and health
+    $"big/face-offset/face/sprite/animation".play('happy') # TODO: based on hunger and health
     $"idle-timer".start(randf_range(1, 4))
 
 func idleProcess(_delta):
@@ -98,7 +98,7 @@ func wanderingProcess(delta):
 func birthingStart():
 
     $animation.play('idle')
-    $big/face/sprite/animation.play('struggling')
+    $"big/face-offset/face/sprite/animation".play('struggling')
     $"birthing-timer".start(randf_range(6, 12))
 
 func birthingProcess(_delta):

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://drbyfpmobkc1r"]
+
+[ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://creature.tscn" id="1_a3j2n"]
+[ext_resource type="Texture2D" uid="uid://bc5caetrdl8gt" path="res://sprites/creature-big2.png" id="2_m3hci"]
+
+[node name="creature" instance=ExtResource("1_a3j2n")]
+
+[node name="big" parent="." index="1"]
+texture = ExtResource("2_m3hci")
+
+[node name="face-offset" parent="big" index="0"]
+position = Vector2(2, -10)
