@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dmbnsojw6n3rr"]
+[gd_scene load_steps=12 format=3 uid="uid://dmbnsojw6n3rr"]
 
 [ext_resource type="Texture2D" uid="uid://tsbn1mttfve7" path="res://sprites/grass.png" id="1_6tou8"]
 [ext_resource type="Script" path="res://objects/grass.gd" id="1_jc8g2"]
 [ext_resource type="Script" path="res://objects/energy.gd" id="3_xrj3g"]
 [ext_resource type="AudioStream" uid="uid://die3c4xxq6yuh" path="res://sounds/death.wav" id="4_3jv2n"]
+[ext_resource type="AudioStream" uid="uid://dc6apodhk88kh" path="res://sounds/upgrade.wav" id="5_ooyy2"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_3poqp"]
 random_pitch = 1.2
@@ -11,21 +12,11 @@ random_volume_offset_db = 1.0
 streams_count = 1
 stream_0/stream = ExtResource("4_3jv2n")
 
-[sub_resource type="Animation" id="Animation_ve6kt"]
-resource_name = "sway"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("scale:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0.0698132, 0.0]
-}
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_4wg15"]
+random_pitch = 1.2
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("5_ooyy2")
 
 [sub_resource type="Animation" id="Animation_ub460"]
 length = 0.001
@@ -72,6 +63,22 @@ tracks/0/keys = {
 "values": [Vector2(1, 0), Vector2(-1, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_ve6kt"]
+resource_name = "sway"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("scale:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0.0698132, 0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4k8yt"]
 _data = {
 "RESET": SubResource("Animation_ub460"),
@@ -95,6 +102,11 @@ script = ExtResource("3_xrj3g")
 
 [node name="death" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_3poqp")
+volume_db = -6.0
+max_distance = 50.0
+
+[node name="upgrade" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_4wg15")
 volume_db = -6.0
 max_distance = 50.0
 

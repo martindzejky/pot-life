@@ -13,7 +13,6 @@ size = Vector2(1336, 862)
 [node name="pot" type="Node2D"]
 
 [node name="sprite" type="Sprite2D" parent="."]
-position = Vector2(-334, 0)
 scale = Vector2(7, 7)
 texture = ExtResource("1_hbj56")
 
@@ -21,7 +20,7 @@ texture = ExtResource("1_hbj56")
 y_sort_enabled = true
 
 [node name="bounds" type="CollisionShape2D" parent="inside"]
-position = Vector2(-338, -95)
+position = Vector2(2, -95)
 shape = SubResource("RectangleShape2D_40xfu")
 
 [node name="spawner" type="Node" parent="inside" node_paths=PackedStringArray("bounds") groups=["spawner"]]
