@@ -11,7 +11,7 @@ signal reached_zero
 func _process(delta):
 
     if not emitted:
-        value += delta # TODO: energy should only be given by good creatures
+        value += delta
 
     if value <= 0 and not emitted:
         value = 0

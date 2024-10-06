@@ -3,6 +3,7 @@ class_name Grass
 
 @export var minScale := 1.0
 @export var maxScale := 2.0
+@export var bounds: CollisionShape2D
 
 var initialScale := 1.0
 
@@ -32,6 +33,9 @@ func _process(delta):
     var newScale := initialScale + floorf($energy.value / 30.0) / 4.0
     if newScale > previousScale + 0.1:
         $upgrade.play()
+        if randf() < 0.2:
+            $energy.value -= 20
+            reproduce()
 
     $scale.scale = Vector2(1, 1) * newScale
 
@@ -66,6 +70,28 @@ func die():
     sound.global_position = global_position
     sound.play()
     # should self-destruct once done playing
+
+
+func reproduce():
+    var copy := duplicate()
+
+    var newPosition = global_position + (Vector2.RIGHT * randf_range(40, 80)).rotated(randf() * PI * 2)
+
+    var rect := bounds.shape.get_rect()
+
+    newPosition.x = clamp(
+        newPosition.x,
+        rect.position.x + bounds.global_position.x,
+        rect.end.x + bounds.global_position.x
+    )
+    newPosition.y = clamp(
+        newPosition.y,
+        rect.position.y + bounds.global_position.y,
+        rect.end.y + bounds.global_position.y
+    )
+
+    get_parent().add_child(copy)
+    copy.global_position = newPosition
 
 
 # idle

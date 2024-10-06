@@ -11,6 +11,8 @@ func _ready():
     # grass
     for i in range(randi_range(50, 80)):
         var object := grassObjects.pick_random().instantiate() as Node2D
+        if object is Grass:
+            object.bounds = bounds
         spawnInBounds(object)
 
     # eggs

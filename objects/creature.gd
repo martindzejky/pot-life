@@ -341,7 +341,7 @@ func healingProcess(delta):
     var otherEnergy := healingTarget.get_node_or_null('energy') as Energy
 
     if otherEnergy != null:
-        otherEnergy.value += delta * 2
+        otherEnergy.value += delta * 8
         $hunger.value += delta * 4
     else:
         switchState('idle')
