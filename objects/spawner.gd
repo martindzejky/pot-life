@@ -20,7 +20,7 @@ func _ready():
         var object := egg.instantiate() as Egg
         object.hatchOnReady = randf() < 0.8
         object.bounds = bounds
-        object.evil = randf() < 0.5
+        object.evil = randf() < 0.7
         spawnInBounds(object)
 
 
