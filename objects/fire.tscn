@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://wihssgv0qjwx"]
+[gd_scene load_steps=9 format=3 uid="uid://wihssgv0qjwx"]
 
 [ext_resource type="Script" path="res://objects/fire.gd" id="1_4gflr"]
 [ext_resource type="Texture2D" uid="uid://bsw6byo77q3mi" path="res://sprites/fire.png" id="1_u8qia"]
+[ext_resource type="Texture2D" uid="uid://cjlkw3btwqr3t" path="res://sprites/shadow.png" id="2_inmsp"]
 [ext_resource type="AudioStream" uid="uid://cy5upfphnmnd5" path="res://sounds/hurt.wav" id="3_1fuxf"]
 
 [sub_resource type="Animation" id="Animation_2rl32"]
@@ -51,6 +52,11 @@ stream_0/stream = ExtResource("3_1fuxf")
 
 [node name="fire" type="Node2D"]
 script = ExtResource("1_4gflr")
+
+[node name="shadow" type="Sprite2D" parent="."]
+visibility_layer = 4
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_inmsp")
 
 [node name="sprite" type="Sprite2D" parent="."]
 visibility_layer = 4

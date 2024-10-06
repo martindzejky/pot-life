@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://3eeoattdm7pk"]
+[gd_scene load_steps=33 format=3 uid="uid://3eeoattdm7pk"]
 
 [ext_resource type="Script" path="res://objects/creature.gd" id="1_17ate"]
 [ext_resource type="Texture2D" uid="uid://xqmief0fxbnc" path="res://sprites/creature-small.png" id="1_uoo81"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://koi35i1jdc20" path="res://objects/skull.tscn" id="2_hdvnx"]
 [ext_resource type="Texture2D" uid="uid://cpxalxqkgxyky" path="res://sprites/face.png" id="4_oxd6a"]
 [ext_resource type="Script" path="res://objects/hunger.gd" id="5_h2seq"]
+[ext_resource type="Texture2D" uid="uid://cjlkw3btwqr3t" path="res://sprites/shadow.png" id="5_hyc1y"]
 [ext_resource type="AudioStream" uid="uid://bv4f0ks1cxkrj" path="res://sounds/birth.wav" id="6_aw1x3"]
 [ext_resource type="AudioStream" uid="uid://vhtcrne0gnni" path="res://sounds/eat.wav" id="7_0fnwu"]
 [ext_resource type="AudioStream" uid="uid://rving2w622lq" path="res://sounds/heal.wav" id="7_lfydl"]
@@ -380,6 +381,12 @@ visibility_layer = 4
 position = Vector2(0, -16)
 texture = ExtResource("2_blnmw")
 hframes = 5
+
+[node name="shadow" type="Sprite2D" parent="big"]
+show_behind_parent = true
+position = Vector2(0, 16)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("5_hyc1y")
 
 [node name="face-offset" type="Node2D" parent="big"]
 position = Vector2(10, -10)

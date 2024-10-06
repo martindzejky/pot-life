@@ -13,7 +13,7 @@ func _input(event):
     if $shooting.time_left > 0: return
     if $cooling.time_left > 0: return
 
-    $laser.visible = true
+    #$laser.visible = true # I think it look better without the dot
     $shooting.start()
     $shoot.play()
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bppbkd6xkeb0q"]
+[gd_scene load_steps=4 format=3 uid="uid://bppbkd6xkeb0q"]
 
 [ext_resource type="Script" path="res://objects/rock.gd" id="1_ibruy"]
 [ext_resource type="Texture2D" uid="uid://bh26dk7tfhnrd" path="res://sprites/rock.png" id="2_q8jnj"]
+[ext_resource type="Texture2D" uid="uid://cjlkw3btwqr3t" path="res://sprites/shadow.png" id="3_fra50"]
 
 [node name="rock" type="Node2D"]
 script = ExtResource("1_ibruy")
@@ -9,6 +10,11 @@ minScale = 2.0
 maxScale = 3.0
 
 [node name="scale" type="Node2D" parent="."]
+
+[node name="shadow" type="Sprite2D" parent="scale"]
+visibility_layer = 4
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_fra50")
 
 [node name="sprite" type="Sprite2D" parent="scale"]
 y_sort_enabled = true

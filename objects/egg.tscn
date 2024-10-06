@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dwvp01keji613"]
+[gd_scene load_steps=15 format=3 uid="uid://dwvp01keji613"]
 
 [ext_resource type="Script" path="res://objects/egg.gd" id="1_b3l4u"]
 [ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://objects/creature.tscn" id="2_x32em"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b2g0vvfvviuwd" path="res://objects/creature3.tscn" id="4_onbxq"]
 [ext_resource type="PackedScene" uid="uid://dtb1y8546baha" path="res://objects/creature-evil.tscn" id="5_70r7s"]
 [ext_resource type="PackedScene" uid="uid://dprsm4s5vq820" path="res://objects/creature-evil2.tscn" id="6_yas1h"]
+[ext_resource type="Texture2D" uid="uid://cjlkw3btwqr3t" path="res://sprites/shadow.png" id="7_qnn67"]
 [ext_resource type="AudioStream" uid="uid://bv4f0ks1cxkrj" path="res://sounds/birth.wav" id="8_aoj1e"]
 
 [sub_resource type="Animation" id="Animation_ng3qu"]
@@ -150,6 +151,11 @@ stream_0/stream = ExtResource("8_aoj1e")
 script = ExtResource("1_b3l4u")
 creatures = Array[PackedScene]([ExtResource("2_x32em"), ExtResource("3_loxjs"), ExtResource("4_onbxq")])
 evilCreatures = Array[PackedScene]([ExtResource("5_70r7s"), ExtResource("6_yas1h")])
+
+[node name="shadow" type="Sprite2D" parent="."]
+visibility_layer = 4
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("7_qnn67")
 
 [node name="rotation" type="Node2D" parent="."]
 
