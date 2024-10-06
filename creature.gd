@@ -4,6 +4,7 @@ class_name Creature
 @export var bounds: CollisionShape2D
 @export var wanderSpeed := 14.0
 @export var wanderRange := 40.0
+@export var evil := false
 
 
 # primitive state machine
@@ -37,13 +38,18 @@ func switchState(newState: String):
 func idleStart():
 
     # TODO: based on hunger and health
-    if randf() < 0.02:
+    if randf() < 0.2:
         switchState('birthing')
         return
 
     $animation.play('idle')
-    $"big/face-offset/face/sprite/animation".play('happy') # TODO: based on hunger and health
     $"idle-timer".start(randf_range(1, 4))
+
+    # TODO: based on hunger and health
+    if evil:
+        $"big/face-offset/face/sprite/animation".play('evil')
+    else:
+        $"big/face-offset/face/sprite/animation".play('happy')
 
 func idleProcess(_delta):
     pass
