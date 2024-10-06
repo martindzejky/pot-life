@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://3eeoattdm7pk"]
+[gd_scene load_steps=29 format=3 uid="uid://3eeoattdm7pk"]
 
 [ext_resource type="Script" path="res://objects/creature.gd" id="1_17ate"]
 [ext_resource type="Texture2D" uid="uid://xqmief0fxbnc" path="res://sprites/creature-small.png" id="1_uoo81"]
@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://vhtcrne0gnni" path="res://sounds/eat.wav" id="7_0fnwu"]
 [ext_resource type="AudioStream" uid="uid://dpgfg1gtv57ih" path="res://sounds/step.wav" id="7_st1l7"]
 [ext_resource type="AudioStream" uid="uid://boshnkxeere3a" path="res://sounds/quik.wav" id="10_opyr8"]
+[ext_resource type="AudioStream" uid="uid://die3c4xxq6yuh" path="res://sounds/death.wav" id="10_yfxad"]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7qb5i"]
 random_pitch = 1.2
@@ -314,6 +315,12 @@ random_volume_offset_db = 1.0
 streams_count = 1
 stream_0/stream = ExtResource("6_aw1x3")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_qg8hf"]
+random_pitch = 1.2
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("10_yfxad")
+
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cbnjm"]
 random_pitch = 1.1
 random_volume_offset_db = 1.0
@@ -384,6 +391,11 @@ stream = SubResource("AudioStreamRandomizer_og3gy")
 volume_db = -8.0
 max_distance = 50.0
 
+[node name="death" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_qg8hf")
+volume_db = -6.0
+max_distance = 50.0
+
 [node name="quik" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_cbnjm")
 volume_db = -15.0
@@ -392,3 +404,4 @@ max_distance = 50.0
 [connection signal="timeout" from="idle-timer" to="." method="idleTimeout"]
 [connection signal="timeout" from="birthing-timer" to="." method="birthingTimeout"]
 [connection signal="reached_zero" from="hunger" to="." method="die"]
+[connection signal="finished" from="death" to="death" method="queue_free"]

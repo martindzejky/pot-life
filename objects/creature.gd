@@ -39,11 +39,19 @@ func switchState(newState: String):
         call(state + 'Start', previousState)
 
 func die():
+
     queue_free()
     var object := skull.instantiate()
     get_parent().add_child(object)
     object.global_position = global_position
 
+    # need to move the death sound to the parent so it is not destroyed with the creature
+    var sound := $death as AudioStreamPlayer2D
+    remove_child(sound)
+    get_parent().add_child(sound)
+    sound.global_position = global_position
+    sound.play()
+    # should self-destruct once done playing
 
 
 # idle
