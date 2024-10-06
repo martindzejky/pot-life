@@ -1,7 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dtb1y8546baha"]
+[gd_scene load_steps=5 format=3 uid="uid://dtb1y8546baha"]
 
 [ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://objects/creature.tscn" id="1_yf4pn"]
 [ext_resource type="Texture2D" uid="uid://d1t4rgs4odck4" path="res://sprites/creature-big-evil.png" id="2_863k5"]
+[ext_resource type="AudioStream" uid="uid://bdlqqkawoml1s" path="res://sounds/quik-evil.wav" id="3_treo5"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dsfvx"]
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("3_treo5")
 
 [node name="creature" instance=ExtResource("1_yf4pn")]
 wanderSpeed = 20.0
@@ -14,3 +21,7 @@ texture = ExtResource("2_863k5")
 
 [node name="face-offset" parent="big" index="0"]
 position = Vector2(2, -10)
+
+[node name="quik" parent="." index="8"]
+stream = SubResource("AudioStreamRandomizer_dsfvx")
+volume_db = -17.0

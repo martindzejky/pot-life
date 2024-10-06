@@ -15,6 +15,10 @@ script = ExtResource("1_t2ymm")
 position = Vector2(-206, -220)
 remote_path = NodePath("../magnify-viewport/camera")
 
+[node name="listener" type="AudioListener2D" parent="."]
+position = Vector2(-204, -218)
+current = true
+
 [node name="magnify-viewport" type="SubViewport" parent="."]
 disable_3d = true
 handle_input_locally = false

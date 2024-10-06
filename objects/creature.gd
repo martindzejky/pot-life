@@ -50,12 +50,12 @@ func die():
 
 func idleStart(_prev):
 
-    if $hunger.value > 100 and randf() < 0.04:
+    if $hunger.value > 100 and randf() < 0.1:
         switchState('birthing')
         $hunger.value -= 30
         return
 
-    if evil and $hunger.value < 100 and randf() < 0.6:
+    if evil and $hunger.value < 100 and randf() < 0.3:
         switchState('hunting')
         return
 
@@ -68,7 +68,8 @@ func idleStart(_prev):
         $"big/face-offset/face/sprite/animation".play('happy')
 
 func idleProcess(_delta):
-    pass
+    if not $quik.playing and randf() < 0.001:
+        $quik.play()
 
 func idleTimeout():
     switchState('wandering')
@@ -114,6 +115,9 @@ func wanderingProcess(delta):
     if abs(movement.x) > 0.0001:
         $big.scale.x = sign(movement.x)
 
+    if not $quik.playing and randf() < 0.002:
+        $quik.play()
+
 
 # birthing
 
@@ -124,10 +128,12 @@ func birthingStart(_prev):
     $"birthing-timer".start(randf_range(6, 12))
 
 func birthingProcess(_delta):
-    pass
+    if not $quik.playing and randf() < 0.02:
+        $quik.play()
 
 func birthingTimeout():
     get_tree().get_first_node_in_group('spawner').spawnEggFromCreature(self)
+    $birth.play()
     switchState('idle')
 
 func birthingEnd(_next):
@@ -176,6 +182,9 @@ func huntingProcess(delta):
 
     if abs(movement.x) > 0.0001:
         $big.scale.x = sign(movement.x)
+
+    if not $quik.playing and randf() < 0.002:
+        $quik.play()
 
 func huntingEnd(next):
     if next == 'eating': return

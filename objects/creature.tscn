@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://3eeoattdm7pk"]
+[gd_scene load_steps=26 format=3 uid="uid://3eeoattdm7pk"]
 
 [ext_resource type="Script" path="res://objects/creature.gd" id="1_17ate"]
 [ext_resource type="Texture2D" uid="uid://xqmief0fxbnc" path="res://sprites/creature-small.png" id="1_uoo81"]
@@ -6,6 +6,16 @@
 [ext_resource type="PackedScene" uid="uid://koi35i1jdc20" path="res://objects/skull.tscn" id="2_hdvnx"]
 [ext_resource type="Texture2D" uid="uid://cpxalxqkgxyky" path="res://sprites/face.png" id="4_oxd6a"]
 [ext_resource type="Script" path="res://objects/hunger.gd" id="5_h2seq"]
+[ext_resource type="AudioStream" uid="uid://bv4f0ks1cxkrj" path="res://sounds/birth.wav" id="6_aw1x3"]
+[ext_resource type="AudioStream" uid="uid://vhtcrne0gnni" path="res://sounds/eat.wav" id="7_0fnwu"]
+[ext_resource type="AudioStream" uid="uid://dpgfg1gtv57ih" path="res://sounds/step.wav" id="7_st1l7"]
+[ext_resource type="AudioStream" uid="uid://boshnkxeere3a" path="res://sounds/quik.wav" id="10_opyr8"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7qb5i"]
+random_pitch = 1.2
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("7_0fnwu")
 
 [sub_resource type="Animation" id="Animation_nudsn"]
 length = 0.001
@@ -20,6 +30,37 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_p87ef"]
+resource_name = "eating-evil"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [5, 6]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("eat")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_5kxxg"]
@@ -85,23 +126,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [2, 3]
-}
-
-[sub_resource type="Animation" id="Animation_p87ef"]
-resource_name = "eating-evil"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [5, 6]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_groeh"]
@@ -198,6 +222,23 @@ tracks/1/keys = {
 "update": 1,
 "values": [Vector2(0, 0), Vector2(0, 2), Vector2(0, 0), Vector2(0, 2)]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../step")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}, {
+"args": [0.0],
+"method": &"play"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_s2rmd"]
 _data = {
@@ -205,6 +246,24 @@ _data = {
 "idle": SubResource("Animation_ahkxg"),
 "walk": SubResource("Animation_myl58")
 }
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_d5vbv"]
+random_pitch = 1.2
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("7_st1l7")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_og3gy"]
+random_pitch = 1.2
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("6_aw1x3")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_cbnjm"]
+random_pitch = 1.1
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("10_opyr8")
 
 [node name="creature" type="Node2D" groups=["creature"]]
 script = ExtResource("1_17ate")
@@ -231,6 +290,13 @@ scale = Vector2(0.7, 0.7)
 texture = ExtResource("4_oxd6a")
 hframes = 7
 
+[node name="eat" type="AudioStreamPlayer2D" parent="big/face-offset/face/sprite"]
+position = Vector2(-9.53674e-07, 7.14286)
+scale = Vector2(1.42857, 1.42857)
+stream = SubResource("AudioStreamRandomizer_7qb5i")
+volume_db = -4.0
+max_distance = 50.0
+
 [node name="animation" type="AnimationPlayer" parent="big/face-offset/face/sprite"]
 libraries = {
 "": SubResource("AnimationLibrary_groeh")
@@ -252,6 +318,21 @@ one_shot = true
 
 [node name="hunger" type="Node" parent="."]
 script = ExtResource("5_h2seq")
+
+[node name="step" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_d5vbv")
+volume_db = -18.0
+max_distance = 50.0
+
+[node name="birth" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_og3gy")
+volume_db = -8.0
+max_distance = 50.0
+
+[node name="quik" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_cbnjm")
+volume_db = -15.0
+max_distance = 50.0
 
 [connection signal="timeout" from="idle-timer" to="." method="idleTimeout"]
 [connection signal="timeout" from="birthing-timer" to="." method="birthingTimeout"]
