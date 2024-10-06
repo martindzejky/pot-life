@@ -18,6 +18,7 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/image="res://sprites/splash.png"
 boot_splash/use_filter=false
 config/icon="res://sprites/icon.png"
+config/windows_native_icon="res://sprites/icon.ico"
 boot_splash/minimum_display_time=2000
 
 [display]
