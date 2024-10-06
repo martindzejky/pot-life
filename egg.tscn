@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dwvp01keji613"]
+[gd_scene load_steps=12 format=3 uid="uid://dwvp01keji613"]
 
 [ext_resource type="Script" path="res://egg.gd" id="1_b3l4u"]
 [ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://creature.tscn" id="2_x32em"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://drbyfpmobkc1r" path="res://creature2.tscn" id="3_loxjs"]
 [ext_resource type="PackedScene" uid="uid://b2g0vvfvviuwd" path="res://creature3.tscn" id="4_onbxq"]
 [ext_resource type="PackedScene" uid="uid://dtb1y8546baha" path="res://creature-evil.tscn" id="5_70r7s"]
+[ext_resource type="PackedScene" uid="uid://dprsm4s5vq820" path="res://creature-evil2.tscn" id="6_yas1h"]
 
 [sub_resource type="Animation" id="Animation_ng3qu"]
 length = 0.001
@@ -127,7 +128,7 @@ _data = {
 [node name="egg" type="Node2D"]
 script = ExtResource("1_b3l4u")
 creatures = Array[PackedScene]([ExtResource("2_x32em"), ExtResource("3_loxjs"), ExtResource("4_onbxq")])
-evilCreatures = Array[PackedScene]([ExtResource("5_70r7s")])
+evilCreatures = Array[PackedScene]([ExtResource("5_70r7s"), ExtResource("6_yas1h")])
 
 [node name="rotation" type="Node2D" parent="."]
 

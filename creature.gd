@@ -38,7 +38,7 @@ func switchState(newState: String):
 func idleStart():
 
     # TODO: based on hunger and health
-    if randf() < 0.2:
+    if randf() < 0.1:
         switchState('birthing')
         return
 

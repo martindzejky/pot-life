@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://dprsm4s5vq820"]
+
+[ext_resource type="PackedScene" uid="uid://dtb1y8546baha" path="res://creature-evil.tscn" id="1_lec6g"]
+[ext_resource type="Texture2D" uid="uid://c6uf4j63b800s" path="res://sprites/creature-big-evil2.png" id="2_jkyep"]
+
+[node name="creature" instance=ExtResource("1_lec6g")]
+
+[node name="big" parent="." index="1"]
+texture = ExtResource("2_jkyep")
+
+[node name="face-offset" parent="big" index="0"]
+position = Vector2(5, -6)
