@@ -4,10 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://cpjvt8ukpmiur" path="res://sprites/flower.png" id="2_d86q4"]
 
 [node name="flower" instance=ExtResource("1_xwdbh")]
-minScale = 1.5
-maxScale = 4.0
 
-[node name="sprite" parent="." index="0"]
-position = Vector2(0, -64)
+[node name="sprite" parent="scale" index="0"]
+position = Vector2(0, -32)
 texture = ExtResource("2_d86q4")
 hframes = 3

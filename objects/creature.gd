@@ -153,6 +153,9 @@ func birthingEnd(_next):
 func huntingStart(_prev):
 
     var targets := get_tree().get_nodes_in_group('creature').filter(func(creature): return not creature.evil)
+    var grasses := get_tree().get_nodes_in_group('grass')
+    targets.append_array(grasses)
+
     if targets.size() <= 0:
         switchState('idle')
         return
@@ -208,6 +211,7 @@ func huntingEnd(next):
 func eatingStart(_prev):
     $animation.play('idle')
     $"big/face-offset/face/sprite/animation".play('eating-evil')
+    $"eating-timer".start(randf_range(10, 20))
 
 func eatingProcess(delta):
 
@@ -216,13 +220,23 @@ func eatingProcess(delta):
         return
 
     var otherHunger := huntingTarget.get_node_or_null('hunger') as Hunger
+    var otherEnergy := huntingTarget.get_node_or_null('energy') as Energy
 
-    if otherHunger == null:
+    if otherHunger != null:
+        otherHunger.value -= delta * 6
+        $hunger.value += delta * 6
+    elif otherEnergy != null:
+        otherEnergy.value -= delta * 20
+        $hunger.value += delta * 4
+    else:
         switchState('idle')
-        return
 
-    otherHunger.value -= delta * 4
-    $hunger.value += delta * 4
+func eatingTimeout():
+    switchState('idle')
+
+func eatingEnd(_next):
+    huntingTarget = null
+    $"eating-timer".stop()
 
 func beingEatenStart(_prev):
     $animation.play('being-eaten')
