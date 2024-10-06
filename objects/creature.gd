@@ -18,7 +18,7 @@ var beingEatenBy: Node2D = null
 
 
 func _ready():
-    $hunger.value = randf_range(60, 200)
+    $hunger.value = randf_range(30, 100)
     switchState('idle')
 
 func _process(delta):
@@ -56,16 +56,6 @@ func die():
 # idle
 
 func idleStart(_prev):
-
-    if $hunger.value > 100 and randf() < 0.1:
-        switchState('birthing')
-        $hunger.value -= 30
-        return
-
-    if evil and $hunger.value < 100 and randf() < 0.3:
-        switchState('hunting')
-        return
-
     $animation.play('idle')
     $"idle-timer".start(randf_range(1, 4))
 
@@ -79,7 +69,16 @@ func idleProcess(_delta):
         $quik.play()
 
 func idleTimeout():
-    switchState('wandering')
+
+    if $hunger.value > 100 and randf() < 0.1:
+        switchState('birthing')
+        $hunger.value -= 30
+
+    elif evil and $hunger.value < 100 and randf() < 0.3:
+        switchState('hunting')
+
+    else:
+        switchState('wandering')
 
 func idleEnd(_next):
     $"idle-timer".stop()
