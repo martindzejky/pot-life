@@ -4,6 +4,12 @@ class_name Grass
 @export var minScale := 1.0
 @export var maxScale := 2.0
 
+# primitive state machine
+
+var state := ''
+var beingEatenBy: Node2D = null
+
+
 func _ready():
 
     if randf() < 0.5:
@@ -11,8 +17,25 @@ func _ready():
 
     $scale.scale = Vector2(1, 1) * randf_range(minScale, maxScale)
     $scale/sprite.frame = randi_range(0, $scale/sprite.hframes - 1)
-
     $energy.value = randf_range(10, 20)
+
+    switchState('idle')
+
+func _process(delta):
+    call(state + 'Process', delta)
+
+func switchState(newState: String):
+
+    if newState == state: return
+
+    if has_method(state + 'End'):
+        call(state + 'End', newState)
+
+    var previousState := state
+    state = newState
+
+    if has_method(state + 'Start'):
+        call(state + 'Start', previousState)
 
 func die():
 
@@ -25,3 +48,32 @@ func die():
     sound.global_position = global_position
     sound.play()
     # should self-destruct once done playing
+
+
+# idle
+
+func idleStart(_prev):
+    $"idle-timer".start(randf_range(1, 8))
+
+func idleProcess(_delta):
+    pass
+
+func idleTimeout():
+    $animation.play('sway')
+    $"idle-timer".start(randf_range(1, 8))
+
+func idleEnd(_next):
+    $"idle-timer".stop()
+
+# being eaten
+
+func beingEatenStart(_prev):
+    $animation.play('being-eaten')
+
+func beingEatenProcess(_delta):
+    if not is_instance_valid(beingEatenBy):
+        beingEatenBy = null
+        switchState('idle')
+
+func beingEatenEnd(_next):
+    $animation.play('RESET')

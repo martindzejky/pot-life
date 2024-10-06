@@ -10,7 +10,6 @@ class_name Creature
 
 
 # primitive state machine
-# idle, wandering
 
 var state := ''
 var wanderTarget := global_position
@@ -176,7 +175,8 @@ func huntingStart(_prev):
 
 func huntingProcess(delta):
 
-    if huntingTarget == null:
+    if not is_instance_valid(huntingTarget):
+        huntingTarget = null
         switchState('idle')
         return
 
@@ -190,6 +190,9 @@ func huntingProcess(delta):
         if huntingTarget is Creature:
             huntingTarget.beingEatenBy = self
             huntingTarget.switchState('beingEaten')
+        if huntingTarget is Grass:
+            huntingTarget.beingEatenBy = self
+            huntingTarget.switchState('beingEaten')
 
     if abs(movement.x) > 0.0001:
         $big.scale.x = sign(movement.x)
@@ -200,8 +203,10 @@ func huntingProcess(delta):
 func huntingEnd(next):
     if next == 'eating': return
 
-    if huntingTarget != null:
+    if huntingTarget != null and is_instance_valid(huntingTarget):
         if huntingTarget is Creature:
+            huntingTarget.beingEatenBy = null
+        if huntingTarget is Grass:
             huntingTarget.beingEatenBy = null
         huntingTarget = null
 
@@ -215,7 +220,8 @@ func eatingStart(_prev):
 
 func eatingProcess(delta):
 
-    if huntingTarget == null:
+    if not is_instance_valid(huntingTarget):
+        huntingTarget = null
         switchState('idle')
         return
 
@@ -243,5 +249,6 @@ func beingEatenStart(_prev):
     $"big/face-offset/face/sprite/animation".play('struggling')
 
 func beingEatenProcess(_delta):
-    if beingEatenBy == null:
+    if not is_instance_valid(beingEatenBy):
+        beingEatenBy = null
         switchState('idle')

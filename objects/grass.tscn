@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmbnsojw6n3rr"]
+[gd_scene load_steps=10 format=3 uid="uid://dmbnsojw6n3rr"]
 
 [ext_resource type="Texture2D" uid="uid://tsbn1mttfve7" path="res://sprites/grass.png" id="1_6tou8"]
 [ext_resource type="Script" path="res://objects/grass.gd" id="1_jc8g2"]
@@ -10,6 +10,74 @@ random_pitch = 1.2
 random_volume_offset_db = 1.0
 streams_count = 1
 stream_0/stream = ExtResource("4_3jv2n")
+
+[sub_resource type="Animation" id="Animation_ve6kt"]
+resource_name = "sway"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("scale:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0.0698132, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ub460"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("scale:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("scale:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3anaj"]
+resource_name = "being-eaten"
+length = 0.6
+loop_mode = 1
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("scale:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(-1, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4k8yt"]
+_data = {
+"RESET": SubResource("Animation_ub460"),
+"being-eaten": SubResource("Animation_3anaj"),
+"sway": SubResource("Animation_ve6kt")
+}
 
 [node name="grass" type="Node2D" groups=["grass"]]
 script = ExtResource("1_jc8g2")
@@ -30,5 +98,13 @@ stream = SubResource("AudioStreamRandomizer_3poqp")
 volume_db = -6.0
 max_distance = 50.0
 
+[node name="animation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4k8yt")
+}
+
+[node name="idle-timer" type="Timer" parent="."]
+
 [connection signal="reached_zero" from="energy" to="." method="die"]
 [connection signal="finished" from="death" to="death" method="queue_free"]
+[connection signal="timeout" from="idle-timer" to="." method="idleTimeout"]
