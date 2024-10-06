@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b2g0vvfvviuwd"]
 
-[ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://creature.tscn" id="1_5v7is"]
+[ext_resource type="PackedScene" uid="uid://3eeoattdm7pk" path="res://objects/creature.tscn" id="1_5v7is"]
 [ext_resource type="Texture2D" uid="uid://b0q6hgh1482o2" path="res://sprites/creature-big3.png" id="2_jjxol"]
 
 [node name="creature" instance=ExtResource("1_5v7is")]

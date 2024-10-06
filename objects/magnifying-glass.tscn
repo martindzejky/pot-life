@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dhhxtcf6sovpj"]
 
-[ext_resource type="Script" path="res://magnifying-glass.gd" id="1_t2ymm"]
+[ext_resource type="Script" path="res://objects/magnifying-glass.gd" id="1_t2ymm"]
 [ext_resource type="Texture2D" uid="uid://dpk73y08v1xqr" path="res://sprites/magnifying-glass.png" id="2_k147v"]
 [ext_resource type="Script" path="res://scripts/viewport-shared-world.gd" id="2_q2rkc"]
 [ext_resource type="Texture2D" uid="uid://btmnophlty74y" path="res://sprites/magnifying-glass-mask.png" id="3_34oo4"]

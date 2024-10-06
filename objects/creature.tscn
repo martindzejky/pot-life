@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://3eeoattdm7pk"]
 
-[ext_resource type="Script" path="res://creature.gd" id="1_17ate"]
+[ext_resource type="Script" path="res://objects/creature.gd" id="1_17ate"]
 [ext_resource type="Texture2D" uid="uid://xqmief0fxbnc" path="res://sprites/creature-small.png" id="1_uoo81"]
 [ext_resource type="Texture2D" uid="uid://cgwpiw2dm4wra" path="res://sprites/creature-big.png" id="2_blnmw"]
 [ext_resource type="Texture2D" uid="uid://cpxalxqkgxyky" path="res://sprites/face.png" id="4_oxd6a"]
