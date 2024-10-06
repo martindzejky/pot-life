@@ -27,7 +27,7 @@ shape = SubResource("RectangleShape2D_40xfu")
 [node name="spawner" type="Node" parent="inside" node_paths=PackedStringArray("bounds") groups=["spawner"]]
 script = ExtResource("2_di1ca")
 bounds = NodePath("../bounds")
-grassObjects = Array[PackedScene]([ExtResource("2_b78c6"), ExtResource("4_51yba"), ExtResource("5_2lk54"), ExtResource("5_2lk54"), ExtResource("5_2lk54")])
+grassObjects = Array[PackedScene]([ExtResource("2_b78c6"), ExtResource("4_51yba"), ExtResource("5_2lk54"), ExtResource("5_2lk54"), ExtResource("5_2lk54"), ExtResource("2_b78c6")])
 egg = ExtResource("7_br2l4")
 
 [node name="timer" type="Timer" parent="inside/spawner"]

@@ -9,7 +9,7 @@ class_name Spawner
 func _ready():
 
     # grass
-    for i in range(randi_range(30, 40)):
+    for i in range(randi_range(50, 80)):
         var object := grassObjects.pick_random().instantiate() as Node2D
         spawnInBounds(object)
 
