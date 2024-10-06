@@ -6,6 +6,7 @@ class_name Creature
 @export var wanderSpeed := 14.0
 @export var wanderRange := 40.0
 @export var huntingSpeed := 18.0
+@export var healingSpeed := 18.0
 @export var evil := false
 
 
@@ -14,6 +15,7 @@ class_name Creature
 var state := ''
 var wanderTarget := global_position
 var huntingTarget: Node2D = null
+var healingTarget: Node2D = null
 var beingEatenBy: Node2D = null
 
 
@@ -76,6 +78,9 @@ func idleTimeout():
 
     elif evil and $hunger.value < 100 and randf() < 0.3:
         switchState('hunting')
+
+    elif not evil and $hunger.value < 100 and randf() < 0.4:
+        switchState('goingToHeal')
 
     else:
         switchState('wandering')
@@ -210,6 +215,63 @@ func huntingEnd(next):
         huntingTarget = null
 
 
+# going to heal
+
+func goingToHealStart(_prev):
+
+    var targets := get_tree().get_nodes_in_group('grass')
+
+    if targets.size() <= 0:
+        switchState('idle')
+        return
+
+    var closestTarget := targets[0] as Node2D
+    var closestDistance := closestTarget.global_position.distance_squared_to(global_position)
+
+    for t in targets:
+        var distance = t.global_position.distance_squared_to(global_position)
+        if distance < closestDistance:
+            closestDistance = distance
+            closestTarget = t
+
+    healingTarget = closestTarget
+
+    $animation.play('walk')
+    $"big/face-offset/face/sprite/animation".play('happy')
+
+func goingToHealProcess(delta):
+
+    if not is_instance_valid(healingTarget):
+        healingTarget = null
+        switchState('idle')
+        return
+
+    var movement = global_position.direction_to(healingTarget.global_position) * healingSpeed * delta
+    var distance = global_position.distance_squared_to(healingTarget.global_position)
+
+    if distance > 80.0:
+        global_position += movement
+    else:
+        switchState('healing')
+        if healingTarget is Grass:
+            healingTarget.beingHealedBy = self
+            healingTarget.switchState('beingHealed')
+
+    if abs(movement.x) > 0.0001:
+        $big.scale.x = sign(movement.x)
+
+    if not $quik.playing and randf() < 0.002:
+        $quik.play()
+
+func goingToHealEnd(next):
+    if next == 'healing': return
+
+    if healingTarget != null and is_instance_valid(healingTarget):
+        if healingTarget is Grass:
+            healingTarget.beingHealedBy = null
+        healingTarget = null
+
+
 # eating
 
 func eatingStart(_prev):
@@ -240,6 +302,11 @@ func eatingTimeout():
     switchState('idle')
 
 func eatingEnd(_next):
+    if is_instance_valid(huntingTarget):
+        if huntingTarget is Creature:
+            huntingTarget.beingEatenBy = null
+        if huntingTarget is Grass:
+            huntingTarget.beingEatenBy = null
     huntingTarget = null
     $"eating-timer".stop()
 
@@ -251,3 +318,36 @@ func beingEatenProcess(_delta):
     if not is_instance_valid(beingEatenBy):
         beingEatenBy = null
         switchState('idle')
+
+
+# healing
+
+func healingStart(_prev):
+    $animation.play('idle')
+    $"big/face-offset/face/sprite/animation".play('healing')
+    $"healing-timer".start(randf_range(10, 20))
+
+func healingProcess(delta):
+
+    if not is_instance_valid(healingTarget):
+        healingTarget = null
+        switchState('idle')
+        return
+
+    var otherEnergy := healingTarget.get_node_or_null('energy') as Energy
+
+    if otherEnergy != null:
+        otherEnergy.value += delta * 2
+        $hunger.value += delta * 4
+    else:
+        switchState('idle')
+
+func healingTimeout():
+    switchState('idle')
+
+func healingEnd(_next):
+    if is_instance_valid(healingTarget):
+        if healingTarget is Grass:
+            healingTarget.beingHealedBy = null
+    healingTarget = null
+    $"healing-timer".stop()

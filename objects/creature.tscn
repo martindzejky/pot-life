@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://3eeoattdm7pk"]
+[gd_scene load_steps=32 format=3 uid="uid://3eeoattdm7pk"]
 
 [ext_resource type="Script" path="res://objects/creature.gd" id="1_17ate"]
 [ext_resource type="Texture2D" uid="uid://xqmief0fxbnc" path="res://sprites/creature-small.png" id="1_uoo81"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://objects/hunger.gd" id="5_h2seq"]
 [ext_resource type="AudioStream" uid="uid://bv4f0ks1cxkrj" path="res://sounds/birth.wav" id="6_aw1x3"]
 [ext_resource type="AudioStream" uid="uid://vhtcrne0gnni" path="res://sounds/eat.wav" id="7_0fnwu"]
+[ext_resource type="AudioStream" uid="uid://rving2w622lq" path="res://sounds/heal.wav" id="7_lfydl"]
 [ext_resource type="AudioStream" uid="uid://dpgfg1gtv57ih" path="res://sounds/step.wav" id="7_st1l7"]
 [ext_resource type="AudioStream" uid="uid://boshnkxeere3a" path="res://sounds/quik.wav" id="10_opyr8"]
 [ext_resource type="AudioStream" uid="uid://die3c4xxq6yuh" path="res://sounds/death.wav" id="10_yfxad"]
@@ -17,6 +18,12 @@ random_pitch = 1.2
 random_volume_offset_db = 1.0
 streams_count = 1
 stream_0/stream = ExtResource("7_0fnwu")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yvbxd"]
+random_pitch = 1.2
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("7_lfydl")
 
 [sub_resource type="Animation" id="Animation_nudsn"]
 length = 0.001
@@ -129,12 +136,44 @@ tracks/0/keys = {
 "values": [2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_51i6m"]
+resource_name = "healing"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [7, 8]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("heal")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_groeh"]
 _data = {
 "RESET": SubResource("Animation_nudsn"),
 "eating-evil": SubResource("Animation_p87ef"),
 "evil": SubResource("Animation_5kxxg"),
 "happy": SubResource("Animation_n2br8"),
+"healing": SubResource("Animation_51i6m"),
 "sad": SubResource("Animation_m1tgo"),
 "struggling": SubResource("Animation_64w17")
 }
@@ -350,13 +389,20 @@ position = Vector2(10, -10)
 [node name="sprite" type="Sprite2D" parent="big/face-offset/face"]
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("4_oxd6a")
-hframes = 7
+hframes = 9
 
 [node name="eat" type="AudioStreamPlayer2D" parent="big/face-offset/face/sprite"]
 position = Vector2(-9.53674e-07, 7.14286)
 scale = Vector2(1.42857, 1.42857)
 stream = SubResource("AudioStreamRandomizer_7qb5i")
-volume_db = -4.0
+volume_db = -2.0
+max_distance = 50.0
+
+[node name="heal" type="AudioStreamPlayer2D" parent="big/face-offset/face/sprite"]
+position = Vector2(-9.53674e-07, 7.14286)
+scale = Vector2(1.42857, 1.42857)
+stream = SubResource("AudioStreamRandomizer_yvbxd")
+volume_db = -2.0
 max_distance = 50.0
 
 [node name="animation" type="AnimationPlayer" parent="big/face-offset/face/sprite"]
@@ -381,31 +427,35 @@ one_shot = true
 [node name="eating-timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="healing-timer" type="Timer" parent="."]
+one_shot = true
+
 [node name="hunger" type="Node" parent="."]
 script = ExtResource("5_h2seq")
 
 [node name="step" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_d5vbv")
-volume_db = -18.0
+volume_db = -6.0
 max_distance = 50.0
 
 [node name="birth" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_og3gy")
-volume_db = -8.0
+volume_db = -4.0
 max_distance = 50.0
 
 [node name="death" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_qg8hf")
-volume_db = -6.0
+volume_db = -2.0
 max_distance = 50.0
 
 [node name="quik" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_cbnjm")
-volume_db = -15.0
+volume_db = -8.0
 max_distance = 50.0
 
 [connection signal="timeout" from="idle-timer" to="." method="idleTimeout"]
 [connection signal="timeout" from="birthing-timer" to="." method="birthingTimeout"]
 [connection signal="timeout" from="eating-timer" to="." method="eatingTimeout"]
+[connection signal="timeout" from="healing-timer" to="." method="healingTimeout"]
 [connection signal="reached_zero" from="hunger" to="." method="die"]
 [connection signal="finished" from="death" to="death" method="queue_free"]

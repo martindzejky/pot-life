@@ -10,6 +10,7 @@ var initialScale := 1.0
 
 var state := ''
 var beingEatenBy: Node2D = null
+var beingHealedBy: Node2D = null
 
 
 func _ready():
@@ -89,4 +90,18 @@ func beingEatenProcess(_delta):
         switchState('idle')
 
 func beingEatenEnd(_next):
+    $animation.play('RESET')
+
+
+# being healed
+
+func beingHealedStart(_prev):
+    $animation.play('being-healed')
+
+func beingHealedProcess(_delta):
+    if not is_instance_valid(beingHealedBy):
+        beingHealedBy = null
+        switchState('idle')
+
+func beingHealedEnd(_next):
     $animation.play('RESET')
