@@ -76,7 +76,7 @@ func idleProcess(_delta):
 
 func idleTimeout():
 
-    if $hunger.value > 100 and randf() < 0.1:
+    if $hunger.value > 60 and randf() < 0.3:
         switchState('birthing')
         $hunger.value -= 30
 
