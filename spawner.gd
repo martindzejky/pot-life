@@ -21,6 +21,18 @@ func _ready():
         spawnInBounds(object)
 
 
+func spawnEgg():
+
+    $timer.start(randf_range(4, 10))
+
+    if get_tree().get_node_count_in_group('creature') < 100:
+        if randf() < 0.4:
+            var object := egg.instantiate() as Egg
+            object.bounds = bounds
+            spawnInBounds(object)
+
+
+
 
 func spawnInBounds(object: Node2D):
 

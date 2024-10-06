@@ -21,12 +21,12 @@ handle_input_locally = false
 canvas_item_default_texture_filter = 0
 gui_disable_input = true
 canvas_cull_mask = 4293918725
-size = Vector2i(500, 500)
+size = Vector2i(200, 200)
 script = ExtResource("2_q2rkc")
 
 [node name="camera" type="Camera2D" parent="magnify-viewport"]
 position = Vector2(-206, -220)
-zoom = Vector2(4, 4)
+zoom = Vector2(1.5, 1.5)
 
 [node name="mask" type="Sprite2D" parent="."]
 clip_children = 1
@@ -38,7 +38,6 @@ texture = ExtResource("3_34oo4")
 [node name="view" type="Sprite2D" parent="mask"]
 visibility_layer = 2
 position = Vector2(-10, -10)
-scale = Vector2(0.25, 0.25)
 texture = SubResource("ViewportTexture_ub75n")
 
 [node name="frame" type="Sprite2D" parent="."]

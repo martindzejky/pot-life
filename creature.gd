@@ -37,13 +37,15 @@ func switchState(newState: String):
 func idleStart():
     $animation.play('idle')
     $"idle-timer".start(randf_range(1, 4))
-    $"idle-timer".connect('timeout', idleTimeout, CONNECT_ONE_SHOT)
 
 func idleProcess(_delta):
     pass
 
 func idleTimeout():
     switchState('wandering')
+
+func idleEnd():
+    $"idle-timer".stop()
 
 
 # wandering
@@ -80,4 +82,5 @@ func wanderingProcess(delta):
         global_position = wanderTarget
         switchState('idle')
 
-    $big.flip_h = movement.x < 0
+    if abs(movement.x) > 0.0001:
+        $big.scale.x = sign(movement.x)

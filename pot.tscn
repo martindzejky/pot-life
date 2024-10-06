@@ -29,3 +29,10 @@ script = ExtResource("2_di1ca")
 bounds = NodePath("../bounds")
 grassObjects = Array[PackedScene]([ExtResource("2_b78c6"), ExtResource("4_51yba"), ExtResource("5_2lk54")])
 egg = ExtResource("7_br2l4")
+
+[node name="timer" type="Timer" parent="inside/spawner"]
+wait_time = 4.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="inside/spawner/timer" to="inside/spawner" method="spawnEgg"]
