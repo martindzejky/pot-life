@@ -58,6 +58,41 @@ func die():
     sound.play()
     # should self-destruct once done playing
 
+func pickOneOfNClosest(targets: Array[Node], n: int) -> Node2D:
+
+    if targets.size() <= 0:
+        return null
+    if targets.size() <= n:
+        return targets.pick_random()
+
+    # array of [Node2D, float]
+    var closest = []
+
+    for t in targets:
+
+        if t is not Node2D:
+            continue
+
+        var distance := global_position.distance_squared_to(t.global_position)
+
+        if closest.size() < n:
+            closest.append([t, distance])
+            continue
+
+        # find the furthest object and replace it if the new one is closer
+        var maxDistance := -INF
+        var maxIndex := 0
+
+        for i in range(closest.size()):
+            if closest[i][1] > maxDistance:
+                maxDistance = closest[i][1]
+                maxIndex = i
+
+        if distance < maxDistance:
+            closest[maxIndex] = [t, distance]
+
+    return closest.pick_random()[0]
+
 
 # idle
 
@@ -167,16 +202,7 @@ func huntingStart(_prev):
         switchState('idle')
         return
 
-    var closestTarget := targets[0] as Node2D
-    var closestDistance := closestTarget.global_position.distance_squared_to(global_position)
-
-    for t in targets:
-        var distance = t.global_position.distance_squared_to(global_position)
-        if distance < closestDistance:
-            closestDistance = distance
-            closestTarget = t
-
-    huntingTarget = closestTarget
+    huntingTarget = pickOneOfNClosest(targets, 3)
 
     $animation.play('walk')
     $"big/face-offset/face/sprite/animation".play('evil')
@@ -229,16 +255,8 @@ func goingToHealStart(_prev):
         switchState('idle')
         return
 
-    var closestTarget := targets[0] as Node2D
-    var closestDistance := closestTarget.global_position.distance_squared_to(global_position)
+    healingTarget = pickOneOfNClosest(targets, 3)
 
-    for t in targets:
-        var distance = t.global_position.distance_squared_to(global_position)
-        if distance < closestDistance:
-            closestDistance = distance
-            closestTarget = t
-
-    healingTarget = closestTarget
 
     $animation.play('walk')
     $"big/face-offset/face/sprite/animation".play('happy')
