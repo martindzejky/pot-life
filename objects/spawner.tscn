@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2dmsleuajh27"]
+
+[ext_resource type="Script" path="res://objects/spawner.gd" id="1_pok5l"]
+[ext_resource type="PackedScene" uid="uid://dmbnsojw6n3rr" path="res://objects/grass.tscn" id="2_4h8d2"]
+[ext_resource type="PackedScene" uid="uid://cr55idqo8g4sy" path="res://objects/flower.tscn" id="3_60g1t"]
+[ext_resource type="PackedScene" uid="uid://bppbkd6xkeb0q" path="res://objects/rock.tscn" id="4_wwvs2"]
+[ext_resource type="PackedScene" uid="uid://dwvp01keji613" path="res://objects/egg.tscn" id="5_k271q"]
+
+[node name="spawner" type="Node" groups=["spawner"]]
+script = ExtResource("1_pok5l")
+plants = Array[PackedScene]([ExtResource("2_4h8d2"), ExtResource("3_60g1t"), ExtResource("4_wwvs2")])
+egg = ExtResource("5_k271q")
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="timer" to="." method="spawnEgg"]

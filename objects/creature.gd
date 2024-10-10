@@ -182,7 +182,7 @@ func birthingProcess(_delta):
         $quik.play()
 
 func birthingTimeout():
-    get_tree().get_first_node_in_group('spawner').spawnEggFromCreature(self)
+    get_tree().call_group('spawner', 'spawnEggFromCreature', self)
     $birth.play()
     switchState('idle')
 

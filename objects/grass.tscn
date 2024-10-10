@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://tsbn1mttfve7" path="res://sprites/grass.png" id="1_6tou8"]
 [ext_resource type="Script" path="res://objects/grass.gd" id="1_jc8g2"]
-[ext_resource type="Texture2D" uid="uid://cjlkw3btwqr3t" path="res://sprites/shadow.png" id="2_srivj"]
+[ext_resource type="PackedScene" uid="uid://csqsyqu024ooo" path="res://objects/shadow.tscn" id="2_y15fc"]
 [ext_resource type="Script" path="res://objects/energy.gd" id="3_xrj3g"]
 [ext_resource type="AudioStream" uid="uid://die3c4xxq6yuh" path="res://sounds/death.wav" id="4_3jv2n"]
 [ext_resource type="AudioStream" uid="uid://dc6apodhk88kh" path="res://sounds/upgrade.wav" id="5_ooyy2"]
@@ -123,10 +123,8 @@ script = ExtResource("1_jc8g2")
 
 [node name="scale" type="Node2D" parent="."]
 
-[node name="shadow" type="Sprite2D" parent="scale"]
-visibility_layer = 4
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("2_srivj")
+[node name="shadow" parent="scale" instance=ExtResource("2_y15fc")]
+scale = Vector2(0.5, 0.5)
 
 [node name="sprite" type="Sprite2D" parent="scale"]
 y_sort_enabled = true

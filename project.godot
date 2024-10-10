@@ -13,7 +13,7 @@ config_version=5
 config/name="Pot Life"
 config/description="My submission for Ludum Dare #56."
 config/version="1.0"
-run/main_scene="res://main.tscn"
+run/main_scene="res://tests/one-creature.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/image="res://sprites/splash.png"
 boot_splash/use_filter=false
@@ -30,6 +30,12 @@ window/size/window_height_override=1200
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[file_customization]
+
+folder_colors={
+"res://tests/": "green"
+}
+
 [input]
 
 shoot={
@@ -41,8 +47,8 @@ shoot={
 [layer_names]
 
 2d_render/layer_1="Default"
-2d_render/layer_2="Small Only"
-2d_render/layer_3="Big Only"
+2d_render/layer_2="Zoomed-out only"
+2d_render/layer_3="Zoomed-in only"
 
 [rendering]
 

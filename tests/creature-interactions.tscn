@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://caoqcehesanlp"]
+
+[ext_resource type="PackedScene" uid="uid://c2dmsleuajh27" path="res://objects/spawner.tscn" id="1_s537k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8dm34"]
+size = Vector2(682, 440)
+
+[node name="creature-interactions" type="Node"]
+
+[node name="camera" type="Camera2D" parent="."]
+
+[node name="sorting" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="bounds" type="CollisionShape2D" parent="sorting"]
+shape = SubResource("RectangleShape2D_8dm34")
+
+[node name="spawner" parent="sorting" node_paths=PackedStringArray("bounds") instance=ExtResource("1_s537k")]
+bounds = NodePath("../bounds")
+spawnPlants = 40
+spawnCreatures = 10

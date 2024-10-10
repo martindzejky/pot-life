@@ -1,11 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bfcpwstcd18tx"]
+[gd_scene load_steps=4 format=3 uid="uid://bfcpwstcd18tx"]
 
 [ext_resource type="Texture2D" uid="uid://cyhyfexvya2bb" path="res://sprites/pot.png" id="1_hbj56"]
-[ext_resource type="PackedScene" uid="uid://dmbnsojw6n3rr" path="res://objects/grass.tscn" id="2_b78c6"]
-[ext_resource type="Script" path="res://objects/spawner.gd" id="2_di1ca"]
-[ext_resource type="PackedScene" uid="uid://cr55idqo8g4sy" path="res://objects/flower.tscn" id="4_51yba"]
-[ext_resource type="PackedScene" uid="uid://bppbkd6xkeb0q" path="res://objects/rock.tscn" id="5_2lk54"]
-[ext_resource type="PackedScene" uid="uid://dwvp01keji613" path="res://objects/egg.tscn" id="7_br2l4"]
+[ext_resource type="PackedScene" uid="uid://c2dmsleuajh27" path="res://objects/spawner.tscn" id="2_pv1wx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40xfu"]
 size = Vector2(1319, 796)
@@ -23,15 +19,5 @@ y_sort_enabled = true
 position = Vector2(-6.5, -62)
 shape = SubResource("RectangleShape2D_40xfu")
 
-[node name="spawner" type="Node" parent="inside" node_paths=PackedStringArray("bounds") groups=["spawner"]]
-script = ExtResource("2_di1ca")
+[node name="spawner" parent="inside" node_paths=PackedStringArray("bounds") instance=ExtResource("2_pv1wx")]
 bounds = NodePath("../bounds")
-grassObjects = Array[PackedScene]([ExtResource("2_b78c6"), ExtResource("4_51yba"), ExtResource("5_2lk54"), ExtResource("5_2lk54"), ExtResource("5_2lk54"), ExtResource("2_b78c6")])
-egg = ExtResource("7_br2l4")
-
-[node name="timer" type="Timer" parent="inside/spawner"]
-wait_time = 4.0
-one_shot = true
-autostart = true
-
-[connection signal="timeout" from="inside/spawner/timer" to="inside/spawner" method="spawnEgg"]

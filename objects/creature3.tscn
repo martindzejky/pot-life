@@ -5,8 +5,8 @@
 
 [node name="creature" instance=ExtResource("1_5v7is")]
 
-[node name="big" parent="." index="1"]
+[node name="big" parent="." index="2"]
 texture = ExtResource("2_jjxol")
 
 [node name="face-offset" parent="big" index="0"]
-position = Vector2(12, 2)
+position = Vector2(12, -1)

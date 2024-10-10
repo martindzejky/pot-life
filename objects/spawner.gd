@@ -2,25 +2,38 @@ extends Node
 class_name Spawner
 
 @export var bounds: CollisionShape2D
-@export var grassObjects: Array[PackedScene] = []
+@export var plants: Array[PackedScene] = []
 @export var egg: PackedScene
+
+@export var spawnPlants := 80
+@export var spawnCreatures := 20
+@export var spawnEggs := 4
+@export var chanceEggIsEvil := 0.7
 
 
 func _ready():
 
-    # grass
-    for i in range(randi_range(50, 80)):
-        var object := grassObjects.pick_random().instantiate() as Node2D
+    # plants
+    for i in range(spawnPlants):
+        var object := plants.pick_random().instantiate() as Node2D
         if object is Grass:
             object.bounds = bounds
         spawnInBounds(object)
 
-    # eggs
-    for i in range(randi_range(14, 22)):
+    # creatures
+    for i in range(spawnCreatures):
         var object := egg.instantiate() as Egg
-        object.hatchOnReady = randf() < 0.8
+        object.hatchOnReady = true
         object.bounds = bounds
-        object.evil = randf() < 0.7
+        object.evil = randf() < chanceEggIsEvil
+        spawnInBounds(object)
+
+    # eggs
+    for i in range(spawnEggs):
+        var object := egg.instantiate() as Egg
+        object.hatchOnReady = false
+        object.bounds = bounds
+        object.evil = randf() < chanceEggIsEvil
         spawnInBounds(object)
 
 
