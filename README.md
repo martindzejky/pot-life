@@ -9,5 +9,5 @@ My Ludum Dare 56 submission for the theme "Tiny Creatures".
 
 ## Next steps
 
-See #1 for ideas.
+See [#1](https://github.com/martindzejky/pot-life/issues/1) for ideas.
 
