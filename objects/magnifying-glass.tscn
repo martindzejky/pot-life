@@ -22,11 +22,11 @@ script = ExtResource("1_t2ymm")
 fire = ExtResource("2_1sfl2")
 
 [node name="remote-transform" type="RemoteTransform2D" parent="."]
-position = Vector2(-206, -220)
+position = Vector2(-426, -447)
 remote_path = NodePath("../magnify-viewport/camera")
 
 [node name="listener" type="AudioListener2D" parent="."]
-position = Vector2(-204, -218)
+position = Vector2(-426, -447)
 current = true
 
 [node name="magnify-viewport" type="SubViewport" parent="."]
@@ -35,18 +35,17 @@ handle_input_locally = false
 canvas_item_default_texture_filter = 0
 gui_disable_input = true
 canvas_cull_mask = 4293918725
-size = Vector2i(200, 200)
+size = Vector2i(160, 160)
 script = ExtResource("2_q2rkc")
 
 [node name="camera" type="Camera2D" parent="magnify-viewport"]
-position = Vector2(-206, -220)
-zoom = Vector2(1.5, 1.5)
+position = Vector2(-426, -447)
 
 [node name="mask" type="Sprite2D" parent="."]
 clip_children = 1
 visibility_layer = 2
-position = Vector2(-167, -187)
-scale = Vector2(4, 4)
+position = Vector2(-354, -387)
+scale = Vector2(8, 8)
 texture = ExtResource("3_34oo4")
 
 [node name="view" type="Sprite2D" parent="mask"]
@@ -56,13 +55,13 @@ texture = SubResource("ViewportTexture_ub75n")
 
 [node name="frame" type="Sprite2D" parent="."]
 visibility_layer = 2
-position = Vector2(-167, -187)
-scale = Vector2(4, 4)
+position = Vector2(-354, -387)
+scale = Vector2(8, 8)
 texture = ExtResource("2_k147v")
 
 [node name="laser" type="Sprite2D" parent="."]
 visible = false
-position = Vector2(-207, -219)
+position = Vector2(-424, -451)
 scale = Vector2(8, 8)
 texture = ExtResource("5_760g6")
 
