@@ -9,6 +9,7 @@ size = Vector2(1319, 796)
 [node name="pot" type="Node2D"]
 
 [node name="sprite" type="Sprite2D" parent="."]
+z_index = -10
 scale = Vector2(7, 7)
 texture = ExtResource("1_hbj56")
 
